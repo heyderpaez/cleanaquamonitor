@@ -57,4 +57,13 @@ $app->get('/guardar/{nivelTanque}/{stateMotor}/{ph}', function ($nivelTanque, $s
     return "<p>Ok</p>";
 });
 
+$app->get('/requestArduino', function () use ($app) {
+
+    $data = file_get_contents('http://181.51.212.137:9000');
+    $decodedData = json_decode($data);
+
+    return var_dump($decodedData);
+});
+
+
 $app->run();
