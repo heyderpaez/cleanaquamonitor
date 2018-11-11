@@ -28,6 +28,8 @@ $app->get('/tiemporeal', function() use($app) {
     $data = file_get_contents('http://181.51.212.137:9000');
     $decodedData = json_decode($data);
 
+    return var_dump($decodedData->nivelTanque);
+
     return $app['twig']->render('tiemporeal.twig', array(
         'nivelTanque' => var_dump($decodedData->nivelTanque),
         'estadoMotor' => var_dump($decodedData->estadoMotor),
