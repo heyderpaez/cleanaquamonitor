@@ -25,17 +25,13 @@ $app->get('/', function() use($app) {
 $app->get('/tiemporeal', function() use($app) {
   $app['monolog']->addDebug('logging output.');
 
-  $dbconn = pg_connect("host=ec2-54-243-52-209.compute-1.amazonaws.com port=5432 dbname=d27bt4i4fpppbi user=vqerrktdlmffck password=uAzCqG1pvUCjIrYtfJti5BatTC");
-
-  $consultaDB = pg_query($dbconn, "SELECT * FROM clean-aqua-db ORDER BY id DESC LIMIT 1");
-  $datosRecibidos = pg_fetch_row($consultaDB);
-
+    $data = file_get_contents('http://181.51.212.137:9000');
+    $decodedData = json_decode($data);
 
     return $app['twig']->render('tiemporeal.twig', array(
-        'fechaActualizacion' => $datosRecibidos[1],
-        'nivelTanque' => 60,
-        'estadoMotor' => $datosRecibidos[3],
-        'ph' => $datosRecibidos[4],
+        'nivelTanque' => var_dump($decodedData->nivelTanque),
+        'estadoMotor' => var_dump($decodedData->estadoMotor),
+        'ph' => var_dump($decodedData->ph),
     ));
 });
 
@@ -61,6 +57,8 @@ $app->get('/requestArduino', function () use ($app) {
 
     $data = file_get_contents('http://181.51.212.137:9000');
     $decodedData = json_decode($data);
+
+
 
     return var_dump($decodedData);
 });
