@@ -27,9 +27,12 @@ $app->get('/tiemporeal', function() use($app) {
 
     $data = file_get_contents('http://181.51.212.137:9000');
     $decodedData = json_decode($data);
+    $nivel = $decodedData->nivelTanque;
+    $nivelTanque = ($nivel-548)/(-1.09);
+
 
     return $app['twig']->render('tiemporeal.twig', array(
-        'nivelTanque' => $decodedData->nivelTanque,
+        'nivelTanque' => $nivelTanque,
         'estadoMotor' => $decodedData->estadoMotor,
         'ph' => $decodedData->ph,
     ));
