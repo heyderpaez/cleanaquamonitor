@@ -14,7 +14,7 @@
 
         <div class="col-md-6">
             <h3 style="color:#FFFFFF">Estado del Mezclador</h3>
-            <img src="/images/helice.gif" style="display: block; margin-left: auto; margin-right: auto;"/>
+            <img id="motorView" src="/images/helice.gif" style="display: block; margin-left: auto; margin-right: auto;"/>
         </div>
 
        <br>       
@@ -90,7 +90,12 @@
       }
     } );
 
-
+    if({{estadoMotor}}==0){
+        document.getElementById("motorView").src = "/images/helice.png";
+    }
+    else{
+        document.getElementById("motorView").src = "/images/helice.gif";
+    }
 
 </script>
 
