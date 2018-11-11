@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+
+<meta charset="UTF-8">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+   <title>Clean Aqua Monitor</title>
+
+
+<script>
+	
+	function loadValues(){
+		$.getJSON("http://181.52.121.216:8000", function(result){
+			$.each(result, function (key,val){
+
+				var node = document.createElement("li"); // Create a <li> node
+	
+				var textnode = document.createTextNode(key + ": " + val);  // Create a text node
+
+				node.appendChild(textnode);  // Append the text to <li>
+
+				document.getElementById("listaJson").appendChild(node);     // Append <li> to <ul> with 
+
+			});
+
+		});
+
+	}
+
+
+</script>
+
+
+
+
+</head>
+
+<body onload="loadValues()">
+
+<p> Aquí se van a cargar los datos</p>
+
+
+
+<ul id="listaJson">
+
+</ul>
+
+
+</body>

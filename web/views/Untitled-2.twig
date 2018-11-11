@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+</head>
+
+<body>
+</body>
+</html>
+
+client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println("Connection: close");  // the connection will be closed after completion of the response
+          "Refresh: 5";  // refresh the page automatically every 5 sec
+          client.println();
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+
+
+          <head>
+          client.print("<title>Reporte de planta de tratamiento</title>");
+          client.print("</head>");
+          client.print("<body>");
+          client.print("<body style='background:#5858FA'>");
+          client.print("<font color='#F7D358' size='20'><b><p align='left'>Reporte de par&aacutemetros</font>");
+          client.print("<hr align='left' width='100%' size='5' noshade> ");
+          client.print("</body>");
+
+
+          client.print("<font color='#FFFFFF' size='5'><b><p align='left'>Datos sensados</font>");
+          client.print("<br>");
+
+
+          // output the value of each analog input pin
+          for (int analogChannel = 1; analogChannel < 5; analogChannel++) {
+            int sensorReading = analogRead(analogChannel);
+
+           <table border=”1” style='width:60%'>");
+            client.print("<tr>");
+            client.print("<td bgcolor=#FFFFFF><font color='black' size='5'><b><p align='center'>sensor: ");
+            //client.print("analog input: ");
+            client.print(analogChannel);
+            client.print("</b></td></font>");
+            client.print("<td bgcolor=#FFFFFF><font color='black' size='5'><b><p align='center'>");
+            client.print(sensorReading);
+            client.print("</b></td></font>");
+            client.print("</tr>");
+
+          }
+          client.println("</table>");
+          client.print("<br />");
+          client.println("<marquee bgcolor='#5858FA' behavior='scroll' direction='left'>");
+          client.println("<b><font color='#FFFFFF' size='5'>Planta de tratamiento de aguas para el proceso de biselado de vidrio</font></b>");
+          client.println("</marquee>");
+          break;
+          client.println("</html>");

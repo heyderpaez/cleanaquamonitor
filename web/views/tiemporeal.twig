@@ -1,0 +1,183 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    
+
+    <!-- Defining the main content section of the page -->
+    <div class="content" style="height:950px">
+
+        <h4>Fecha actualización</h4> {{fechaActualizacion}} 
+
+        <div class="col-md-6">
+            <h3 style="color:#FFFFFF">Nivel del Tanque</h3>
+            <div id="sustancia" style="width: 100%; height: 350px;"></div>
+        </div>
+
+        <div class="col-md-6">
+            <h3 style="color:#FFFFFF">Estado del Mezclador</h3>
+            <img src="/images/helice.gif" style="display: block; margin-left: auto; margin-right: auto;"/>
+        </div>
+
+       <br>       
+
+        <div class="col-md-12">
+            <h3 style="color:#FFFFFF">PH</h3>
+            <div id="ph_graph" style="width: 100%; height: 350px;"></div>
+        </div>
+
+    </div>
+
+        
+
+    <footer>
+        <div class="foot">
+            <div class="foot_wrap">Clean Aqua monitor | <a href="#">Privacy</a></div>
+        </div>
+    </footer>
+
+<script>
+    var tanque1_fill = {{nivelTanque}};
+    var tanque1_outfill = 100 - tanque1_fill;
+
+    var sustancia1Data = [ {
+      "category": "Sustancia 1 en el Contenedor 1",
+      "value1": tanque1_fill,
+      "value2": tanque1_outfill
+    } ];
+
+    var chart = AmCharts.makeChart( "sustancia", {
+      "theme": "chalk",
+      "type": "serial",
+      "depth3D": 30,
+      "angle": 30,
+      "autoMargins": true,
+      "dataProvider": sustancia1Data,
+      "valueAxes": [ {
+        "stackType": "100%",
+        "gridAlpha": 0
+      } ],
+      "graphs": [ {
+        "type": "column",
+        "topRadius": 1,
+        "columnWidth": 1,
+        "showOnAxis": true,
+        "lineThickness": 2,
+        "lineAlpha": 0.5,
+        "lineColor": "#FFFFFF",
+        "fillColors": "#8d003b",
+        "fillAlphas": 0.8,
+        "valueField": "value1"
+      }, {
+        "type": "column",
+        "topRadius": 1,
+        "columnWidth": 1,
+        "showOnAxis": true,
+        "lineThickness": 2,
+        "lineAlpha": 0.5,
+        "lineColor": "#cdcdcd",
+        "fillColors": "#cdcdcd",
+        "fillAlphas": 0.5,
+        "valueField": "value2"
+      } ],
+
+      "categoryField": "category",
+      "categoryAxis": {
+        "axisAlpha": 0,
+        "labelOffset": 40,
+        "gridAlpha": 0
+      },
+      "export": {
+        "enabled": false
+      }
+    } );
+
+
+
+</script>
+
+<!-- Chart code -->
+<script>
+var chartData = generateChartData();
+
+var chart = AmCharts.makeChart("ph_graph", {
+    "type": "serial",
+    "theme": "chalk",
+    "marginRight": 80,
+    "dataProvider": chartData,
+    "valueAxes": [{
+        "position": "left",
+        "title": "PH"
+    }],
+    "graphs": [{
+        "id": "g1",
+        "fillAlphas": 0.4,
+        "valueField": "visits",
+         "balloonText": "<div style='margin:5px; font-size:19px;'>Visits:<b>[[value]]</b></div>"
+    }],
+    "chartScrollbar": {
+        "graph": "g1",
+        "scrollbarHeight": 80,
+        "backgroundAlpha": 0,
+        "selectedBackgroundAlpha": 0.1,
+        "selectedBackgroundColor": "#888888",
+        "graphFillAlpha": 0,
+        "graphLineAlpha": 0.5,
+        "selectedGraphFillAlpha": 0,
+        "selectedGraphLineAlpha": 1,
+        "autoGridCount": true,
+        "color": "#AAAAAA"
+    },
+    "chartCursor": {
+        "categoryBalloonDateFormat": "JJ:NN, DD MMMM",
+        "cursorPosition": "mouse"
+    },
+    "categoryField": "date",
+    "categoryAxis": {
+        "minPeriod": "mm",
+        "parseDates": true
+    },
+    "export": {
+        "enabled": true,
+         "dateFormat": "YYYY-MM-DD HH:NN:SS"
+    }
+});
+
+chart.addListener("dataUpdated", zoomChart);
+// when we apply theme, the dataUpdated event is fired even before we add listener, so
+// we need to call zoomChart here
+zoomChart();
+// this method is called when chart is first inited as we listen for "dataUpdated" event
+function zoomChart() {
+    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+    chart.zoomToIndexes(chartData.length - 250, chartData.length - 100);
+}
+
+// generate some random data, quite different range
+function generateChartData() {
+    var chartData = [];
+    // current date
+    var firstDate = new Date();
+    // now set 500 minutes back
+    firstDate.setMinutes(firstDate.getDate() - 1000);
+
+    // and generate 500 data items
+    var visits = 500;
+    for (var i = 0; i < 500; i++) {
+        var newDate = new Date(firstDate);
+        // each time we add one minute
+        newDate.setMinutes(newDate.getMinutes() + i);
+        // some random number
+        visits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+        // add data item to the array
+        chartData.push({
+            date: newDate,
+            visits: visits
+        });
+    }
+    return chartData;
+}
+</script>
+
+
+{% endblock %}
